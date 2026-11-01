@@ -14,5 +14,12 @@
     }).join("");
   document.getElementById("pgrid").innerHTML = list.map(u.productCard).join("");
 
+  BH.ready(function(){
+    var list=document.getElementById('cat-list'),active=list.querySelector('a.on');
+    if(active && matchMedia('(max-width:720px)').matches){
+      list.scrollLeft=active.offsetLeft-list.offsetLeft-(list.clientWidth-active.offsetWidth)/2;
+    }
+  });
+
   if (c) document.title = c.t + " — BELLA HOME";
 })();
