@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -2 56 64">
+  <style>
+    .frame,.rays{fill:none;stroke:#9c7b45;stroke-width:1.6}
+    .sun{fill:#9c7b45}
+    text{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;fill:#1f1a1e}
+    @media (prefers-color-scheme:dark){text{fill:#eee7ea}.frame,.rays{stroke:#c9a86b}.sun{fill:#c9a86b}}
+  </style>
+  <path class="frame" d="M5 59V24a19 19 0 0 1 38 0v35"/><path class="frame" d="M9 59V24a15 15 0 0 1 30 0v35"/><path class="frame" d="M9 26.5h30M2 59h44"/><path class="rays" d="M24 26L11.8 19.6M24 26L16.5 13.4M24 26V11M24 26L31.5 13.4M24 26L36.2 19.6"/><path class="sun" d="M19.5 26.5a4.5 4.5 0 0 1 9 0z"/><text x="24" y="47" font-size="15" text-anchor="middle" letter-spacing=".6">BH</text>
+</svg>

@@ -1,0 +1,131 @@
+/* Текстовые страницы: документы, карта сайта, 404 */
+.doc {
+    max-width: 70ch;
+    margin-inline: auto;
+    display: grid;
+    gap: 16px
+}
+
+.doc h1 {
+    margin-bottom: 12px
+}
+
+.doc h2 {
+    font-size: 15px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    margin-top: 14px
+}
+
+.smap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 32px;
+    max-width: 1000px;
+    margin-inline: auto
+}
+
+.smap h3 {
+    font-family: var(--f-deco);
+    font-size: 20px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 10px
+}
+
+.smap ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 6px
+}
+
+.smap ul ul {
+    padding-left: 16px;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 6px
+}
+
+.smap a:hover {
+    color: var(--brass)
+}
+
+/* Незаполненные реквизиты: видно, что нужно получить от заказчика */
+mark.fill {
+    background: color-mix(in srgb, var(--brass) 22%, transparent);
+    color: var(--ink);
+    padding: 0 .3em;
+    border-radius: 2px;
+    font-size: .92em
+}
+
+.doc-note {
+    border: 1px dashed var(--brass);
+    background: var(--panel);
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--ink-soft)
+}
+
+.doc-meta {
+    font-size: 13px;
+    letter-spacing: .08em;
+    color: var(--ink-soft);
+    text-align: center
+}
+
+.doc h3 {
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 6px
+}
+
+.doc ol,
+.doc ul {
+    margin: 0;
+    padding-left: 1.3em;
+    display: grid;
+    gap: 6px
+}
+
+.doc ol li::marker,
+.doc ul li::marker {
+    color: var(--brass)
+}
+
+.doc .spec td:first-child {
+    width: 38%
+}
+
+.doc a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--brass)
+}
+
+/* Таблицы с заголовком в документах (понятия, цели, cookie) */
+.doc table th {
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding: 10px 12px 10px 0;
+    border-bottom: 1px solid var(--line)
+}
+
+.doc .spec td {
+    padding-right: 12px
+}
+
+.doc .spec.with-head td:first-child {
+    width: auto;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 14.5px;
+    color: var(--ink)
+}

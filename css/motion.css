@@ -1,0 +1,651 @@
+/* Art-deco motion: one timing system, proportionate to viewport. */
+:root {
+    --motion-ease: cubic-bezier(.2, .65, .25, 1);
+    --reveal-distance: 24px;
+    --reveal-time: 800ms;
+    --intro-delay: 1150ms;
+    --intro-time: 1200ms;
+    --caption-delay: 1750ms;
+    --plaque-delay: 1650ms;
+    --theme-duration: 280ms
+}
+
+body {
+    transition: background-color var(--theme-duration) ease, color var(--theme-duration) ease
+}
+
+.hdr,
+.mbox,
+.ftr,
+.contact-form {
+    transition: background-color var(--theme-duration) ease, border-color var(--theme-duration) ease
+}
+
+/* Switch stays separate from navigation and does not move the centered logo. */
+.hdr {
+    padding-right: 108px
+}
+
+.hdr .theme-switch {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.theme-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 64px;
+    min-height: 44px;
+    cursor: pointer;
+    user-select: none
+}
+
+.theme-switch input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0
+}
+
+.theme-track {
+    position: relative;
+    width: 64px;
+    height: 30px;
+    border: 1px solid var(--brass);
+    background: var(--panel);
+    display: inline-block;
+    box-shadow: inset 0 0 0 3px var(--paper);
+    transition: background-color .28s ease
+}
+
+.theme-track::before,
+.theme-track::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    border: 1px solid var(--brass);
+    background: var(--paper);
+    transform: translateY(-50%) rotate(45deg)
+}
+
+.theme-track::before {
+    left: -3px
+}
+
+.theme-track::after {
+    right: -3px
+}
+
+.theme-sun,
+.theme-moon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 29px;
+    display: grid;
+    place-items: center;
+    font-family: Georgia, serif;
+    font-size: 19px;
+    color: var(--ink-soft)
+}
+
+.theme-sun {
+    left: 1px
+}
+
+.theme-moon {
+    right: 1px
+}
+
+.theme-knob {
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--brass);
+    background: var(--brass);
+    transform: translateX(0);
+    transition: transform .38s var(--motion-ease), background-color .28s
+}
+
+.theme-switch input:checked+.theme-track .theme-knob {
+    transform: translateX(34px)
+}
+
+.theme-switch input:focus-visible+.theme-track {
+    outline: 2px solid var(--ink);
+    outline-offset: 5px
+}
+
+.theme-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%)
+}
+
+/* Let the reveal be independent of image download; crossfade decoded pixels. */
+.io .rv {
+    transform: translate3d(0, var(--reveal-distance), 0);
+    transition: opacity var(--reveal-time) var(--motion-ease), transform var(--reveal-time) var(--motion-ease)
+}
+
+.io .rv.in {
+    transform: translate3d(0, 0, 0)
+}
+
+.io .rv.d1 {
+    transition-delay: 70ms
+}
+
+.io .rv.d2 {
+    transition-delay: 140ms
+}
+
+.io .rv.d3 {
+    transition-delay: 210ms
+}
+
+.io .ph.rv {
+    transform: none;
+    clip-path: inset(3%);
+    transition: clip-path 1000ms var(--motion-ease)
+}
+
+.io .ph.rv.in {
+    clip-path: inset(0)
+}
+
+.ph>img {
+    transform: scale(1.045);
+    transition: opacity 650ms ease, transform 1500ms var(--motion-ease)
+}
+
+.ph.in>img,
+.ph.no-rv>img,
+.ph:not(.rv)>img {
+    transform: scale(1)
+}
+
+a:hover .ph>img {
+    transform: scale(1.025)
+}
+
+/* Constant panel widths avoid reflow on every frame while hovering. */
+.half {
+    transition: none;
+    min-width: 0
+}
+
+.half:hover {
+    flex-grow: 1
+}
+
+.half .ph {
+    transition: filter .7s ease
+}
+
+.half .ph img {
+    transition: opacity .65s ease, transform 1.6s var(--motion-ease)
+}
+
+.half.l .ph {
+    animation: entryLeft var(--intro-time) var(--motion-ease) var(--intro-delay) both
+}
+
+.half.r .ph {
+    animation: entryRight var(--intro-time) var(--motion-ease) var(--intro-delay) both
+}
+
+.half .cap {
+    animation: fadeUp 800ms var(--motion-ease) var(--caption-delay) both
+}
+
+.hdr-splash .brand {
+    animation: fadeUp 700ms var(--motion-ease) var(--caption-delay) both
+}
+
+.splash-mono {
+    animation: monoOut 650ms var(--motion-ease) 1050ms forwards;
+    width: clamp(90px, 9vw, 135px);
+    height: clamp(112px, 11.25vw, 169px)
+}
+
+.plaque {
+    animation: plaqueIn 850ms var(--motion-ease) var(--plaque-delay) both;
+    pointer-events: none
+}
+
+.splash {
+    height: calc(100svh - var(--hdr));
+    min-height: 480px
+}
+
+.splash .axis {
+    animation: axis 900ms var(--motion-ease) 250ms both
+}
+
+@keyframes entryLeft {
+    from {
+        clip-path: inset(0 0 0 100%)
+    }
+
+    to {
+        clip-path: inset(0)
+    }
+}
+
+@keyframes entryRight {
+    from {
+        clip-path: inset(0 100% 0 0)
+    }
+
+    to {
+        clip-path: inset(0)
+    }
+}
+
+@keyframes entryTop {
+    from {
+        clip-path: inset(0 0 100% 0)
+    }
+
+    to {
+        clip-path: inset(0)
+    }
+}
+
+@keyframes entryBottom {
+    from {
+        clip-path: inset(100% 0 0 0)
+    }
+
+    to {
+        clip-path: inset(0)
+    }
+}
+
+#app {
+    animation: pageIn 450ms ease both;
+    transition: opacity 200ms ease
+}
+
+.curtain.go {
+    animation-duration: 550ms
+}
+
+.drawer {
+    transition: clip-path 450ms var(--motion-ease)
+}
+
+.mbox {
+    transition: transform 450ms var(--motion-ease)
+}
+
+.slides {
+    transition: transform 1000ms var(--motion-ease)
+}
+
+/* Hover zoom is for a pointer; touch devices never stick in hover state. */
+@media(hover:hover) and (pointer:fine) {
+    .half:hover .ph img {
+        transform: scale(1.035)
+    }
+
+    .half:hover .ph {
+        filter: brightness(1.04)
+    }
+}
+
+@media(hover:none) {
+
+    a:hover .ph>img,
+    .ph.zoom:hover>img {
+        transform: scale(1)
+    }
+
+    .half .cap .go {
+        opacity: 1;
+        transform: none
+    }
+}
+
+@media(max-width:1100px) and (min-width:901px) {
+    .nav {
+        gap: 12px
+    }
+
+    .nav a {
+        font-size: 11px;
+        letter-spacing: .06em
+    }
+
+    .brand {
+        font-size: 17px
+    }
+
+    .brand small {
+        font-size: 8px
+    }
+}
+
+@media(max-width:900px) {
+    .hdr {
+        padding-right: 98px
+    }
+
+    .hdr:not(.hdr-splash) {
+        grid-template-columns: 1fr auto 1fr
+    }
+
+    .hdr .theme-switch {
+        right: 14px
+    }
+
+    .burger {
+        margin-right: 0
+    }
+
+    .theme-track {
+        width: 56px;
+        height: 28px
+    }
+
+    .theme-switch {
+        min-width: 56px
+    }
+
+    .theme-knob {
+        width: 18px;
+        height: 18px
+    }
+
+    .theme-switch input:checked+.theme-track .theme-knob {
+        transform: translateX(28px)
+    }
+
+    .theme-sun,
+    .theme-moon {
+        width: 26px;
+        font-size: 17px
+    }
+}
+
+@media(max-width:720px) {
+    :root {
+        --reveal-distance: 14px;
+        --reveal-time: 600ms;
+        --intro-delay: 1050ms;
+        --intro-time: 950ms;
+        --caption-delay: 1550ms;
+        --plaque-delay: 1450ms
+    }
+
+    .hdr-splash {
+        grid-template-columns: 1fr auto 1fr;
+        gap: 8px;
+        padding-right: 86px
+    }
+
+    .hdr-splash .brand {
+        font-size: 9px;
+        letter-spacing: .025em;
+        white-space: normal;
+        max-width: 100px
+    }
+
+    .hdr-splash .mono {
+        width: 32px;
+        height: 42px
+    }
+
+    .hdr-splash .brand.r {
+        justify-self: end
+    }
+
+    .splash {
+        height: calc(100svh - var(--hdr));
+        min-height: 580px
+    }
+
+    .half {
+        flex: 1 1 0;
+        min-height: 0
+    }
+
+    .half:hover {
+        flex-grow: 1
+    }
+
+    .half.l .ph {
+        animation-name: entryTop
+    }
+
+    .half.r .ph {
+        animation-name: entryBottom
+    }
+
+    .half .cap {
+        bottom: clamp(24px, 5svh, 48px);
+        gap: 7px
+    }
+
+    .half .cap .t {
+        font-size: clamp(27px, 6.5vw, 38px)
+    }
+
+    .half .cap .go {
+        opacity: 1;
+        transform: none
+    }
+
+    .plaque {
+        padding: 15px 22px;
+        max-width: calc(100% - 64px)
+    }
+
+    .io .ph.rv {
+        clip-path: inset(1.5%);
+        transition-duration: 750ms
+    }
+
+    .ph>img {
+        transition-duration: 450ms, 1000ms
+    }
+
+    .io .rv.d1,
+    .io .rv.d2,
+    .io .rv.d3 {
+        transition-delay: 0s
+    }
+
+    .slides {
+        transition-duration: 750ms
+    }
+
+    .curtain.go {
+        animation-duration: 400ms
+    }
+}
+
+@media(max-width:380px) {
+    .hdr-splash .brand {
+        font-size: 8px;
+        max-width: 80px
+    }
+
+    .hdr:not(.hdr-splash) .brand {
+        font-size: 13px
+    }
+
+    .hdr {
+        gap: 8px
+    }
+
+    .hdr .theme-switch {
+        right: 12px
+    }
+
+    .hdr-splash .mono {
+        width: 27px;
+        height: 36px
+    }
+}
+
+@media(max-height:550px) and (orientation:landscape) {
+    .splash {
+        flex-direction: row;
+        height: calc(100svh - var(--hdr));
+        min-height: 320px
+    }
+
+    .half.l .ph {
+        animation-name: entryLeft
+    }
+
+    .half.r .ph {
+        animation-name: entryRight
+    }
+
+    .half .cap {
+        bottom: 18px
+    }
+
+    .half .cap .t {
+        font-size: 28px
+    }
+
+    .half .cap .s {
+        font-size: 9px
+    }
+
+    .half .cap .go {
+        font-size: 9px
+    }
+
+    .plaque {
+        padding: 12px 18px;
+        gap: 3px
+    }
+
+    .pl-brand {
+        font-size: 23px
+    }
+
+    .pl-timeless {
+        font-size: 10px
+    }
+
+    .pl-slogan {
+        font-size: 14px
+    }
+
+    .pl-rule {
+        margin-block: 2px
+    }
+
+    .splash-mono {
+        width: 76px;
+        height: 95px
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-delay: 0s !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important
+    }
+
+    .io .rv {
+        opacity: 1;
+        transform: none
+    }
+
+    .io .ph.rv {
+        clip-path: none
+    }
+}
+
+/* The monogram remains on the page axis even with the switch on the right. */
+.hdr>.mono {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%)
+}
+
+.hdr>.brand:first-child {
+    grid-column: 1
+}
+
+.hdr>.nav,
+.hdr>.burger,
+.hdr-splash>.brand.r {
+    grid-column: 3
+}
+/* Responsive header. Wide: one row; tablet/phone: controls above the horizontal wordmark. */
+.hdr.horizontal-header{height:var(--hdr);grid-template-columns:1fr auto 1fr;gap:20px;padding-inline:32px;padding-right:114px}
+.horizontal-header .header-logo{grid-column:1;display:inline-flex;align-items:center;justify-self:start;width:max-content;text-decoration:none}
+.header-wordmark{display:inline-flex;align-items:baseline;gap:14px;white-space:nowrap;font-family:var(--f-deco);font-size:21px;letter-spacing:.12em;line-height:1.2}
+.header-wordmark small{display:inline;font-family:var(--f-sans);font-size:11px;font-weight:400;letter-spacing:0;color:var(--ink-soft);margin:0}
+.horizontal-header>.mono{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:40px;height:50px}
+.horizontal-header>.nav{grid-column:3;justify-self:end;gap:18px}
+.horizontal-header>.nav a{font-size:12px;letter-spacing:.06em}
+.horizontal-header>.burger{grid-column:3}
+@media(max-width:1180px){
+ :root{--hdr:106px}
+ .hdr.horizontal-header{height:var(--hdr);display:block;padding:0 24px}
+ .horizontal-header>.nav{display:none}
+ .horizontal-header>.mono{top:31px;left:50%;width:34px;height:44px}
+ .horizontal-header>.burger{display:block;position:absolute;left:20px;right:auto;top:9px;width:44px;height:44px;margin:0}
+ .horizontal-header>.burger span{left:10px;right:10px}
+ .horizontal-header>.burger span:nth-child(1){top:16px}
+ .horizontal-header>.burger span:nth-child(2){top:21px}
+ .horizontal-header>.burger span:nth-child(3){top:26px}
+ .hdr.horizontal-header>.theme-switch{position:absolute;right:24px;top:31px;min-height:44px;transform:translateY(-50%)}
+ .horizontal-header .header-logo{position:absolute;left:24px;right:24px;top:66px;height:30px;width:auto;justify-content:center}
+ .header-wordmark{font-size:23px;letter-spacing:.1em;gap:18px}
+ .header-wordmark small{font-size:12px}
+ .drawer{padding-top:calc(var(--hdr) + 24px);padding-bottom:max(30px,env(safe-area-inset-bottom));gap:18px;overscroll-behavior:contain}
+ .drawer a{min-height:44px;display:flex;align-items:center}
+ .menu-open .drawer{display:flex}
+}
+@media(max-width:600px){
+ :root{--hdr:102px}
+ .hdr.horizontal-header{padding-inline:16px}
+ .horizontal-header>.mono{width:31px;height:42px;top:30px}
+ .horizontal-header>.burger{left:10px;top:8px}
+ .hdr.horizontal-header>.theme-switch{right:16px;top:30px}
+ .horizontal-header .header-logo{left:16px;right:16px;top:65px;height:25px}
+ .header-wordmark{font-size:17px;letter-spacing:.055em;gap:12px}
+ .header-wordmark small{font-size:10px}
+ .drawer a{font-size:25px}
+}
+@media(max-width:360px){
+ .header-wordmark{font-size:14px;letter-spacing:.04em;gap:9px}
+ .header-wordmark small{font-size:9.5px}
+ .horizontal-header .header-logo{left:12px;right:12px}
+}
+@media(max-height:500px) and (orientation:landscape) and (max-width:1180px){
+ :root{--hdr:92px}
+ .horizontal-header .header-logo{top:58px;height:24px}
+ .header-wordmark{font-size:18px;gap:12px}
+ .header-wordmark small{font-size:10px}
+ .drawer{gap:6px;padding-top:calc(var(--hdr) + 12px)}
+ .drawer a{font-size:22px;min-height:38px}
+}
+@media(max-width:1180px){
+ .horizontal-header .header-logo{left:50%;right:auto;transform:translateX(-50%);width:max-content;max-width:calc(100% - 32px)}
+}

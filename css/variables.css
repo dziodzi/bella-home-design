@@ -1,0 +1,62 @@
+/* Дизайн-токены BELLA HOME.
+   Layout: витрина с тонкой латунной геометрией ар-деко; узкая колонка текста между широкими фото-блоками, всё по центральной оси */
+:root {
+  color-scheme: light;
+  --paper: #f2edef;
+  /* пудровый фон */
+  --paper-2: #e9e2e5;
+  --panel: #faf7f8;
+  --ink: #1f1a1e;
+  --ink-soft: #615860;
+  --brass: #9c7b45;
+  --brass-soft: rgba(156, 123, 69, .35);
+  --line: rgba(31, 26, 30, .14);
+  --ph-a: #ddd3d7;
+  --ph-b: #d2c6cb;
+  --ph-ink: rgba(31, 26, 30, .55);
+  --overlay: rgba(31, 26, 30, .55);
+  --danger: #b04a4a;
+
+  --f-deco: "Poiret One", "Jost", "Segoe UI", sans-serif;
+  --f-serif: "Cormorant Garamond", "Georgia", serif;
+  --f-sans: "Jost", "Futura", "Segoe UI", Arial, sans-serif;
+
+  --hdr: 64px;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #16131a;
+    --paper-2: #1e1a22;
+    --panel: #211c25;
+    --ink: #eee7ea;
+    --ink-soft: #a99fa6;
+    --brass: #c9a86b;
+    --brass-soft: rgba(201, 168, 107, .35);
+    --line: rgba(238, 231, 234, .14);
+    --ph-a: #2a2430;
+    --ph-b: #231e28;
+    --ph-ink: rgba(238, 231, 234, .55);
+    --overlay: rgba(0, 0, 0, .6);
+    --danger: #e08a8a;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #16131a;
+  --paper-2: #1e1a22;
+  --panel: #211c25;
+  --ink: #eee7ea;
+  --ink-soft: #a99fa6;
+  --brass: #c9a86b;
+  --brass-soft: rgba(201, 168, 107, .35);
+  --line: rgba(238, 231, 234, .14);
+  --ph-a: #2a2430;
+  --ph-b: #231e28;
+  --ph-ink: rgba(238, 231, 234, .55);
+  --overlay: rgba(0, 0, 0, .6);
+  --danger: #e08a8a;
+}

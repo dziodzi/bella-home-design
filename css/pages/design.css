@@ -1,0 +1,250 @@
+/* Раздел Design: о бюро, проекты, страница проекта, услуги, контакты */
+
+/* О бюро: цифры */
+.awards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 40px;
+  padding-block: 28px;
+  border-block: 1px solid var(--line)
+}
+
+.awards div {
+  display: grid;
+  justify-items: center;
+  text-align: center
+}
+
+.awards b {
+  font-family: var(--f-deco);
+  font-size: clamp(30px, 3.6vw, 46px);
+  font-weight: 400;
+  color: var(--brass);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums
+}
+
+.awards span {
+  font-size: 12px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  max-width: 18ch
+}
+
+/* Список проектов: одна широкая карточка, затем пара */
+.plist {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(36px, 4vw, 60px) clamp(14px, 1.6vw, 24px)
+}
+
+.plist .card .ph {
+  aspect-ratio: 4/5
+}
+
+.plist .card:nth-child(3n+1) {
+  grid-column: 1/-1
+}
+
+.plist .card:nth-child(3n+1) .ph {
+  aspect-ratio: 21/9
+}
+
+@media (max-width:720px) {
+  .plist {
+    grid-template-columns: 1fr
+  }
+
+  .plist .card .ph,
+  .plist .card:nth-child(3n+1) .ph {
+    aspect-ratio: 4/3
+  }
+}
+
+/* Страница проекта */
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  border: 1px solid var(--line);
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  position: relative
+}
+
+.facts::before,
+.facts::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--brass);
+  background: var(--paper);
+  transform: rotate(45deg);
+  top: calc(50% - 5px)
+}
+
+.facts::before {
+  left: -5px
+}
+
+.facts::after {
+  right: -5px
+}
+
+.facts div {
+  padding: 14px clamp(18px, 3vw, 40px);
+  display: grid;
+  justify-items: center
+}
+
+.facts div+div {
+  border-left: 1px solid var(--line)
+}
+
+.facts small {
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-soft)
+}
+
+.facts b {
+  font-weight: 400;
+  font-size: 17px;
+  font-variant-numeric: tabular-nums
+}
+
+.room {
+  font-family: var(--f-deco);
+  font-size: 22px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--brass)
+}
+
+.room-pics {
+  margin-top: 28px
+}
+
+/* Услуги: раскрывающийся список */
+.acc {
+  border-top: 1px solid var(--line);
+  max-width: 980px;
+  margin-inline: auto
+}
+
+.acc-i {
+  border-bottom: 1px solid var(--line)
+}
+
+.acc-h {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 26px 4px;
+  text-align: left
+}
+
+.acc-h span {
+  font-family: var(--f-deco);
+  font-size: clamp(20px, 2.4vw, 30px);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: color .3s, letter-spacing .6s var(--ease)
+}
+
+.acc-h:hover span {
+  color: var(--brass);
+  letter-spacing: .14em
+}
+
+.acc-h i {
+  width: 22px;
+  height: 22px;
+  position: relative
+}
+
+.acc-h i::before,
+.acc-h i::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: var(--brass);
+  transition: transform .5s var(--ease)
+}
+
+.acc-h i::after {
+  transform: rotate(90deg)
+}
+
+.acc-i.open .acc-h i::after {
+  transform: rotate(0)
+}
+
+.acc-b {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows .6s var(--ease)
+}
+
+.acc-i.open .acc-b {
+  grid-template-rows: 1fr
+}
+
+.acc-b>div {
+  overflow: hidden
+}
+
+.acc-in {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(20px, 4vw, 56px);
+  padding: 0 4px 34px
+}
+
+.acc-in .steps-t {
+  color: var(--brass);
+  font-size: 12px
+}
+
+.acc-in ol {
+  margin: 0;
+  padding-left: 1.2em;
+  display: grid;
+  gap: 6px;
+  color: var(--ink-soft)
+}
+
+.acc-in ol li::marker {
+  color: var(--brass);
+  font-family: var(--f-deco)
+}
+
+@media (max-width:720px) {
+  .acc-in {
+    grid-template-columns: 1fr
+  }
+}
+
+/* Контакты */
+.cgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(20px, 3vw, 40px);
+  max-width: 1000px;
+  margin-inline: auto
+}
+
+.cbox .hours {
+  color: var(--ink-soft);
+  font-size: 14px
+}
