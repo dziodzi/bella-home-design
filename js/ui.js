@@ -145,8 +145,8 @@ BH.ui = (function(){
   function boot(){
     layout.render();
     if(BH.data.CONTENT && BH.data.CONTENT.demo){
-      var note=document.createElement('p');note.className='content-note wrap';note.textContent='Фото используются как референсы. Реальные проекты и ассортимент BELLA HOME будут размещены после согласования материалов.';
-      if(layout.page!=='doc' && layout.section!=='splash')document.getElementById('app').appendChild(note);
+      var note=document.createElement('p');note.className='content-note wrap';note.textContent='Проекты интерьеров — Ирина Неймышева. Мебельный каталог пока демонстрационный: ассортимент будет опубликован после согласования материалов.';
+      if(layout.section==='maison')document.getElementById('app').appendChild(note);
     }
 
     decoratePhotos();

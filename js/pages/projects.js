@@ -1,9 +1,10 @@
-/* design/projects.html — фильтр по типу (?type=apartment|house|office|progress) и список проектов */
+/* design/projects.html — фильтр по типу (?type=apartment|house|commercial) и список проектов */
 (function(){
   "use strict";
   var u = BH.u, D = BH.data;
   var PAGE_SIZE = 6;
   var type = u.param("type");
+  if (type === "office") type = "commercial";
   if (!D.TYPES[type]) type = null;
 
   var list = D.PROJECTS.filter(function(p){ return !type || p.type === type; });
@@ -12,7 +13,7 @@
   document.getElementById("plist").innerHTML = list.map(function(p, i){
     return '<a class="card rv" href="' + u.projectUrl(p) + '"' + (i >= PAGE_SIZE ? " hidden" : "") + '>' +
       u.projectPh(p, "") +
-      '<div class="nm">' + p.t + '</div><div class="meta">' + D.TYPES[p.type].t + " · Интерьерная подборка" + '</div></a>';
+      '<div class="nm">' + u.esc(p.t) + '</div><div class="meta">' + u.esc(p.lead) + '</div></a>';
   }).join("");
 
   if (type) document.title = D.TYPES[type].t + " — BELLA HOME";

@@ -17,13 +17,10 @@
     return '<a href="projects.html?type=' + k + '" class="' + (p.type === k ? "on" : "") + '"><span>' + D.TYPES[k].t + '</span></a>';
   }).join("");
 
-  /* Комнаты чередуются: широкое фото, затем пара вертикальных */
-  var rooms = p.rooms.map(function(r, i){
-    var name = r[0].toLowerCase();
-    var pics = i % 2 === 0
-      ? '<div class="room-pics">' + u.ph(name, "wide") + '</div>'
-      : '<div class="grid2 room-pics">' + u.ph(name + ", общий вид", "tall") + u.ph(name + ", деталь", "tall") + '</div>';
-    return '<section class="sec flush-b wrap"><div class="txt rv"><span class="room">' + r[0] + '</span><p>' + r[1] + '</p></div>' + pics + '</section>';
+  var gallery = p.images.map(function(caption, index){
+    if (index === p.cover) return "";
+    return '<div class="stack">' + u.projectPh(p, "portfolio-photo", index) +
+      '<p class="small-note">' + u.esc(caption) + '</p></div>';
   }).join("");
 
   var others = D.PROJECTS.filter(function(x){ return x.s !== p.s; }).slice(0, 6);
@@ -34,10 +31,11 @@
     '<section class="wrap mt-s">' + u.projectPh(p, "hero") + '</section>' +
     '<section class="sec flush-b wrap stack">' +
       '<h1 class="h-deco rv">' + p.t + '</h1>' +
-      '<p class="small-note">Подборка референсов для обсуждения. Это не съёмка реализованного объекта BELLA HOME.</p>' +
+      '<p class="small-note">' + u.esc(p.images[p.cover]) + '</p>' +
       '<p class="txt rv lead-intro">' + p.lead + '</p>' +
     '</section>' +
-    rooms +
+    '<section class="sec wrap"><div class="stack portfolio-gallery">' + gallery + '</div>' +
+      '<p class="small-note mt-m">Дизайн: Ирина Неймышева. <a class="text-link" href="' + u.esc(p.source) + '">Проект на Behance →</a></p></section>' +
     '<section class="sec wrap">' + u.ornament() +
       '<h2 class="h-deco rv mt-s mb-m">Больше проектов</h2>' + u.rail(others.map(u.projectCard).join(""), "rail-o") +
       '<div class="btns mt-l"></div>' +

@@ -68,16 +68,17 @@ BH.u = (function(){
   function productUrl(p){ return link("maison/item.html?id=" + p.id); }
   function categoryUrl(c){ return link("maison/catalog.html" + (c ? "?cat=" + c.s : "")); }
 
-  /* Обложка проекта и фото предмета закреплены за ним (data-key), поэтому совпадают на всех страницах */
-  function projectPh(p, cls, extra){
-    return ph(p.t, cls, ' data-key="p:' + p.s + '"' + (extra || ""));
+  function projectPh(p, cls, index){
+    if (index === undefined) index = p.cover;
+    var src = p.photos ? link("img/photos/" + p.photos[index] + ".jpg") : link("img/projects/" + p.s + "-" + (index + 1) + ".webp");
+    return ph(p.images[index] + " · " + p.t, cls, ' data-src="' + esc(src) + '"');
   }
   function productPh(p, cls, extra){
     return ph(p.t, cls, ' data-key="i:' + p.id + '"' + (extra || ""));
   }
   function projectCard(p){
     return '<a class="card rv" href="' + projectUrl(p) + '">' + projectPh(p, "tall") +
-      '<div class="nm">' + p.t + '</div><div class="meta">' + D.TYPES[p.type].one + '</div></a>';
+      '<div class="nm">' + p.t + '</div><div class="meta">' + esc(p.lead) + '</div></a>';
   }
   function productCard(p){
     var on = fav.has(p.id);
