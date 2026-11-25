@@ -28,6 +28,23 @@ BH.ui = (function(){
         img.remove();
         el.insertAdjacentHTML("beforeend", '<div class="lbl"><b>Фото</b>' + (cap ? "<small>" + u.esc(cap) + "</small>" : "") + "</div>");
       };
+      var crop = BH.photoCrops && BH.photoCrops[src.split('/').pop().split('?')[0]];
+      if(crop){
+        el.classList.add('photo-cropped');
+        if(el.classList.contains('portfolio-photo')) el.style.aspectRatio=crop[4]+'/'+crop[5];
+        var originalLoad=img.onload;
+        img.onload=function(){
+          var ns='http://www.w3.org/2000/svg';
+          var svg=document.createElementNS(ns,'svg');
+          svg.setAttribute('viewBox',crop.slice(2).join(' '));
+          svg.setAttribute('preserveAspectRatio','xMidYMid slice');
+          svg.setAttribute('role','img');svg.setAttribute('aria-label',cap);
+          var picture=document.createElementNS(ns,'image');
+          picture.setAttribute('href',src);picture.setAttribute('width',crop[0]);picture.setAttribute('height',crop[1]);
+          svg.appendChild(picture);el.appendChild(svg);img.style.display='none';
+          originalLoad();
+        };
+      }
       img.src = src;
       el.innerHTML = "<i></i>";
       el.appendChild(img);

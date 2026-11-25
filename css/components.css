@@ -475,3 +475,5 @@ a:hover .ph>img,
 .cbox a:hover {
     color: var(--brass)
 }
+/* Show the interior only, excluding presentation-sheet borders and labels. */
+.ph.photo-cropped>svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:hidden}
